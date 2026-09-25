@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bookmark Review
 
-## Getting Started
+Sort your X bookmarks and Instagram saved posts into your own sections, one post at a time, using the keyboard.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Data lives in `data/bookmarks.db` (SQLite). Back it up by copying the file, or use **Export all (JSON)**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Import bookmarks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. `chrome://extensions` → enable **Developer mode** → **Load unpacked** → pick `extension/`.
+2. With the app running, open X → **History** → **Bookmarks** tab (`x.com/i/history`) or Instagram → profile → **Saved** → **All posts**.
+3. Click **🔖 Send to Bookmark Review** (bottom-right). It scrolls through everything and imports as it goes.
+   Re-running is safe: duplicates are skipped and sorted posts stay sorted.
 
-## Learn More
+You can also paste links on the **Import** page.
 
-To learn more about Next.js, take a look at the following resources:
+If the importer stops finding posts after X/Instagram changes their site, update `extension/selectors.js`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Keys (Review screen)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Key | Action |
+|---|---|
+| `1`–`9` | Sort into that section, go to the next post |
+| `Shift`+`1`–`9`, then `Enter` | Put the post in several sections |
+| `S` | Skip (move to the back of the queue) |
+| `X` | Archive |
+| `Z` / `⌘Z` | Undo (repeatable) |
+| `N` | Note |
+| `O` | Open original |
+| `?` | Help |
 
-## Deploy on Vercel
+Sections get keys 1–9 by their order on the **Sections** page.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Adding import sources later
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Every importer produces `ImportedPost[]` (`src/lib/import/types.ts`) and calls `ingest()` (`src/lib/import/ingest.ts`).
+An X API sync or an Instagram "Download your information" ZIP parser only has to do the same.
+
+## Tests
+
+```bash
+npm test
+```

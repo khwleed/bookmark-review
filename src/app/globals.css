@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --bg: #f6f5f2;
+  --card: #ffffff;
+  --muted: #e9e7e2;
+  --line: #dddad3;
+  --fg: #1b1a18;
+  --dim: #6f6b63;
+  --accent: #4f46e5;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #111110;
+    --card: #1b1b19;
+    --muted: #262623;
+    --line: #2f2f2b;
+    --fg: #ecebe7;
+    --dim: #9a978f;
+    --accent: #8b87ff;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+kbd {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  background: var(--card);
+}
+
+.btn {
+  @apply inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm transition-colors;
+  border-color: var(--line);
+  background: var(--card);
+}
+.btn:hover { background: var(--muted); }
+.btn:disabled { opacity: 0.4; pointer-events: none; }
+.input {
+  @apply rounded-lg border px-3 py-1.5 text-sm outline-none;
+  border-color: var(--line);
+  background: var(--card);
+}
+.input:focus { border-color: var(--accent); }
