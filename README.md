@@ -47,3 +47,19 @@ An X API sync or an Instagram "Download your information" ZIP parser only has to
 ```bash
 npm test
 ```
+
+## Privacy
+
+Everything runs on your own machine. Your bookmarks, sections and notes are stored only in
+`data/bookmarks.db`, which is git-ignored and never leaves your computer. The app and extension
+send no data anywhere except `localhost`, and the official X/Instagram embeds you view.
+
+## Disclaimer
+
+The browser extension reads the bookmarks pages you're already logged into. Use it for your own
+account, and be aware that automated scrolling may be against X's or Instagram's terms of service.
+It isn't affiliated with or endorsed by X or Meta.
+
+## License
+
+[MIT](LICENSE): free to use, modify and share.
